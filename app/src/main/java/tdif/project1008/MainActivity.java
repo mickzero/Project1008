@@ -10,13 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText txtProduct, txtDetail, txtPrice;
+    private EditText txtID, txtName, txtEmail, txtBY;
+    private RadioGroup rgGender;
     private Button btnAdd;
+
     private ListView listProduct;
     private ArrayList<ProductData> listData = new ArrayList<ProductData>();
     private DatabaseHelper dbHelper;
@@ -26,10 +30,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txtProduct = (EditText) findViewById(R.id.txtProduct);
-        txtDetail = (EditText) findViewById(R.id.txtDetail);
-        txtPrice = (EditText) findViewById(R.id.txtPrice);
-        btnAdd = (Button) findViewById(R.id.btnAdd);
+        txtID = (EditText) findViewById(R.id.txtID);
+        txtName = (EditText) findViewById(R.id.txtName);
+        txtEmail = (EditText) findViewById(R.id.txtEmail);
+        txtBY = (EditText) findViewById(R.id.txtBY);
+        rgGender = (RadioGroup) findViewById(R.id.rgGender);
         listProduct = (ListView) findViewById(R.id.listProduct);
         dbHelper = new DatabaseHelper(this);
         database = dbHelper.getWritableDatabase();
@@ -46,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showList() {
-        getProduct();
-        listProduct.setAdapter(new AdapterListViewData(this,listData));
+        getStudent();
+        listProduct.setAdapter(new AdapterListViewData(this, listData));
     }
 
-    private void getProduct() {
-        Cursor mCursor = database.query(true, "shoplist", new String[]{"id", "product", "detail", "price"}, null, null, null, null, null, null);
+    private void getStudent() {
+        Cursor mCursor = database.query(true, "student", new String[]{"id", "name", "gender", "email", "by"}, null, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
 
@@ -59,11 +64,12 @@ public class MainActivity extends AppCompatActivity {
             if (mCursor.getCount() > 0) {
                 do {
                     int id = mCursor.getInt(mCursor.getColumnIndex("id"));
-                    String product = mCursor.getString(mCursor.getColumnIndex("product"));
-                    String detail = mCursor.getString(mCursor.getColumnIndex("detail"));
-                    int price = mCursor.getInt(mCursor.getColumnIndex("price"));
+                    String name = mCursor.getString(mCursor.getColumnIndex("name"));
+                    String gender = mCursor.getString(mCursor.getColumnIndex("gender"));
+                    String email = mCursor.getString(mCursor.getColumnIndex("email"));
+                    String by = mCursor.getString(mCursor.getColumnIndex("by"));
 
-                    listData.add(new ProductData(id, product, detail, price));
+                    listData.add(new ProductData(id, name, detail, price));
                 } while (mCursor.moveToNext());
             }
         }
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         database.delete("shoplist", "id = " + id, null);
         Toast.makeText(this, "Delete Data Id " + id + " Complete", Toast.LENGTH_SHORT).show();
 
-        showList();
+        //showList();
     }
 
     private void addProduct() {
@@ -100,9 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Add Data Complete", Toast.LENGTH_SHORT).show();
 
+
             txtProduct.setText("");
             txtDetail.setText("");
             txtPrice.setText("");
+
 
             showList();
         } else {

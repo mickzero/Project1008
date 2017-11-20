@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 
 public class AdapterListViewData extends BaseAdapter {
+
     private LayoutInflater mInflater;
     private Context context;
     private MainActivity control;
@@ -58,6 +59,7 @@ public class AdapterListViewData extends BaseAdapter {
         } else {
             holderListAdapter = (HolderListAdapter) convertView.getTag();
         }
+
         final int id = listData.get(position).getId();
         final String product = listData.get(position).getProduct();
         final String detail = listData.get(position).getDetail();
@@ -70,6 +72,7 @@ public class AdapterListViewData extends BaseAdapter {
                 control.deleteProduct(id);
             }
         });
+
         holderListAdapter.btnEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 control.showEdit(id, product, detail, price);

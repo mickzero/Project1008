@@ -11,9 +11,9 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "ShopDB3";
+    private static final String DB_NAME = "studentDB3";
     private static final int DB_VERSION = 1;
-    private static final String DB_CREATE = "" + "CREATE TABLE shoplist (" + "id INTEGER PRIMARY KEY, " + "product TEXT NOT NULL, " + "detail TEXT NOT NULL, " + "price INTEGER NOT NULL);";
+    private static final String DB_CREATE = "" + "CREATE TABLE student (" + "id INTEGER PRIMARY KEY, " + "name TEXT NOT NULL, " + "gender TEXT NOT NULL, " + "email TEXT NOT NULL, "+"by TEXT NOT NULL"+");";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

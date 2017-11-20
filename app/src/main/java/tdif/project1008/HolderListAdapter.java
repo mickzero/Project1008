@@ -8,6 +8,6 @@ import android.widget.TextView;
  */
 
 public class HolderListAdapter {
-    TextView txtProduct, txtDetail, txtPrice;
+    TextView txtID, txtName, txtGender,txtEmail,txtBY;
     Button btnEdit, btnDelete;
 }
