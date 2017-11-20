@@ -11,18 +11,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private EditText txtID, txtName, txtEmail, txtBY;
+    private String txtGender;
     private RadioGroup rgGender;
     private Button btnAdd;
 
     private ListView listProduct;
-    private ArrayList<ProductData> listData = new ArrayList<ProductData>();
+    private ArrayList<StData> listData = new ArrayList<StData>();
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
 
@@ -35,12 +35,18 @@ public class MainActivity extends AppCompatActivity {
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtBY = (EditText) findViewById(R.id.txtBY);
         rgGender = (RadioGroup) findViewById(R.id.rgGender);
+        if (rgGender.getCheckedRadioButtonId() == R.id.rbFemale) {
+            txtGender = "Female";
+        } else {
+            txtGender = "Male";
+        }
         listProduct = (ListView) findViewById(R.id.listProduct);
         dbHelper = new DatabaseHelper(this);
         database = dbHelper.getWritableDatabase();
 
         showList();
 
+        btnAdd = (Button) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,53 +69,58 @@ public class MainActivity extends AppCompatActivity {
             listData.clear();
             if (mCursor.getCount() > 0) {
                 do {
-                    int id = mCursor.getInt(mCursor.getColumnIndex("id"));
+                    String id = mCursor.getString(mCursor.getColumnIndex("id"));
                     String name = mCursor.getString(mCursor.getColumnIndex("name"));
                     String gender = mCursor.getString(mCursor.getColumnIndex("gender"));
                     String email = mCursor.getString(mCursor.getColumnIndex("email"));
                     String by = mCursor.getString(mCursor.getColumnIndex("by"));
 
-                    listData.add(new ProductData(id, name, detail, price));
+                    listData.add(new StData(id, name, gender, email, by));
                 } while (mCursor.moveToNext());
             }
         }
     }
 
-    public void editProduct(int id, String product, String detail, int price) {
+    public void editProduct(String id, String name, String gender, String email, String by) {
         ContentValues values = new ContentValues();
         values.put("id", id);
-        values.put("product", product);
-        values.put("detail", detail);
-        values.put("price", price);
+        values.put("name", name);
+        values.put("gender", gender);
+        values.put("email", email);
+        values.put("by", by);
 
-        database.update("shoplist", values, "id = ?", new String[]{"" + id});
+        database.update("student", values, "id = ?", new String[]{"" + id});
 
         showList();
     }
 
-    public void deleteProduct(int id) {
-        database.delete("shoplist", "id = " + id, null);
+    public void deleteProduct(String id) {
+        database.delete("student", "id = " + id, null);
         Toast.makeText(this, "Delete Data Id " + id + " Complete", Toast.LENGTH_SHORT).show();
 
-        //showList();
+        showList();
     }
 
     private void addProduct() {
         //เชคว่าข้อมูลที่ป้อนเปน null มั้ย
-        if (txtProduct.length() > 0 && txtDetail.length() > 0 && txtPrice.length() > 0) {
+        if (txtID.length() > 0 && txtName.length() > 0 && txtEmail.length() > 0 && txtBY.length() > 0) {
             ContentValues values = new ContentValues();
-            values.put("product", txtProduct.getText().toString());
-            values.put("detail", txtDetail.getText().toString());
-            values.put("price", txtPrice.getText().toString());
+            values.put("id", txtID.getText().toString());
+            values.put("name", txtName.getText().toString());
+            values.put("gender", txtGender);
+            values.put("email", txtEmail.getText().toString());
+            values.put("by", txtBY.getText().toString());
 
-            database.insert("shoplist", null, values);
+            database.insert("student", null, values);
 
             Toast.makeText(this, "Add Data Complete", Toast.LENGTH_SHORT).show();
 
 
-            txtProduct.setText("");
-            txtDetail.setText("");
-            txtPrice.setText("");
+            txtID.setText("");
+            txtName.setText("");
+            txtGender = "";
+            txtEmail.setText("");
+            txtBY.setText("");
 
 
             showList();
@@ -118,13 +129,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showEdit(int id, String product, String detail, int price) {
+    public void showEdit(String id, String name, String gender, String email, String by) {
         //ไปหน้า edit ผ่าน intent
         Intent i = new Intent(this, EditActivity.class);
         i.putExtra("keyId", id);
-        i.putExtra("keyProduct", product);
-        i.putExtra("keyDetail", detail);
-        i.putExtra("keyPrice", price);
+        i.putExtra("keyName", name);
+        i.putExtra("keyGender", gender);
+        i.putExtra("keyEmail", email);
+        i.putExtra("keyBY", by);
 
         startActivityForResult(i, 1);
     }
@@ -133,11 +145,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
 
-            int id = intent.getExtras().getInt("keyId");
-            String productEdit = intent.getExtras().getString("keyProduct");
-            String DetailEdit = intent.getExtras().getString("keyDetail");
-            int PriceEdit = intent.getExtras().getInt("keyPrice");
-            editProduct(id, productEdit, DetailEdit, PriceEdit);
+            String id = intent.getExtras().getString("keyId");
+            String NameEdit = intent.getExtras().getString("keyName");
+            String GenderEdit = intent.getExtras().getString("keyGender");
+            String EmailEdit = intent.getExtras().getString("keyEmail");
+            String BYEdit = intent.getExtras().getString("keyBY");
+
+            editProduct(id, NameEdit, GenderEdit, EmailEdit,BYEdit);
         }
     }
 }

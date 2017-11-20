@@ -19,9 +19,9 @@ public class AdapterListViewData extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context context;
     private MainActivity control;
-    private ArrayList<ProductData> listData = new ArrayList<ProductData>();
+    private ArrayList<StData> listData = new ArrayList<StData>();
 
-    public AdapterListViewData(MainActivity control, ArrayList<ProductData> listData) {
+    public AdapterListViewData(MainActivity control, ArrayList<StData> listData) {
         this.control = control;
         this.context = control.getBaseContext();
         this.mInflater = LayoutInflater.from(context);
@@ -50,9 +50,11 @@ public class AdapterListViewData extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.adapter_listview, null);
             holderListAdapter = new HolderListAdapter();
 
-            holderListAdapter.txtProduct = (TextView) convertView.findViewById(R.id.txtProduct);
-            holderListAdapter.txtDetail = (TextView) convertView.findViewById(R.id.txtDetail);
-            holderListAdapter.txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
+            holderListAdapter.txtID = (TextView) convertView.findViewById(R.id.txtID);
+            holderListAdapter.txtName = (TextView) convertView.findViewById(R.id.txtName);
+            holderListAdapter.txtGender = (TextView) convertView.findViewById(R.id.txtGender);
+            holderListAdapter.txtEmail = (TextView) convertView.findViewById(R.id.txtEmail);
+            holderListAdapter.txtBY = (TextView) convertView.findViewById(R.id.txtBY);
             holderListAdapter.btnEdit = (Button) convertView.findViewById(R.id.btnEdit);
             holderListAdapter.btnDelete = (Button) convertView.findViewById(R.id.btnDelete);
             convertView.setTag(holderListAdapter);
@@ -60,13 +62,16 @@ public class AdapterListViewData extends BaseAdapter {
             holderListAdapter = (HolderListAdapter) convertView.getTag();
         }
 
-        final int id = listData.get(position).getId();
-        final String product = listData.get(position).getProduct();
-        final String detail = listData.get(position).getDetail();
-        final int price = listData.get(position).getPrice();
-        holderListAdapter.txtProduct.setText("Product : " + product);
-        holderListAdapter.txtDetail.setText("Detail : " + detail);
-        holderListAdapter.txtPrice.setText("Price : " + price);
+        final String id = listData.get(position).getId();
+        final String name = listData.get(position).getName();
+        final String gender = listData.get(position).getGender();
+        final String email = listData.get(position).getEmail();
+        final String by = listData.get(position).getBy();
+        holderListAdapter.txtID.setText("ID : "+ id);
+        holderListAdapter.txtName.setText("Name : " + name);
+        holderListAdapter.txtGender.setText("Gender : " + gender);
+        holderListAdapter.txtEmail.setText("Email : " + email);
+        holderListAdapter.txtBY.setText("BirthYear : " + by);
         holderListAdapter.btnDelete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 control.deleteProduct(id);
@@ -75,7 +80,7 @@ public class AdapterListViewData extends BaseAdapter {
 
         holderListAdapter.btnEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                control.showEdit(id, product, detail, price);
+                control.showEdit(id, name, gender, email, by);
             }
         });
         return convertView;

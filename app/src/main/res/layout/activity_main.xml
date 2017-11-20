@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="Add ShoppingList"
+        android:text="Add StudentList"
         android:textColor="#0044AA" />
 
     <TableLayout
@@ -134,7 +134,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="ShoppingList"
+        android:text="StudentList"
         android:textColor="#0044AA" />
 
     <ListView
@@ -143,5 +143,17 @@
         android:layout_height="wrap_content">
 
     </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:text="DeleteAll"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </LinearLayout>

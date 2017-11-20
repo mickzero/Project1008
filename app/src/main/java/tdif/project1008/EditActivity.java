@@ -6,34 +6,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 public class EditActivity extends AppCompatActivity {
 
-    private EditText txtProductEdit, txtDetailEdit, txtPriceEdit;
+    private EditText txtIDEdit, txtNameEdit, txtEmailEdit,txtBYEdit;
+    private RadioGroup rgGenderEdit;
     private Button btnEdit;
-    private int id;
+    private String txtGenderEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        txtProductEdit = (EditText) findViewById(R.id.txtProductEdit);
-        txtDetailEdit = (EditText) findViewById(R.id.txtDetailEdit);
-        txtPriceEdit = (EditText) findViewById(R.id.txtPriceEdit);
+        txtIDEdit = (EditText) findViewById(R.id.txtIDEdit);
+        txtNameEdit = (EditText) findViewById(R.id.txtNameEdit);
+        txtEmailEdit = (EditText) findViewById(R.id.txtEmailEdit);
+        txtBYEdit = (EditText) findViewById(R.id.txtBYEdit);
+        rgGenderEdit = (RadioGroup) findViewById(R.id.rgGenderEdit);
         btnEdit = (Button) findViewById(R.id.btnEdit);
 
-        this.id = getIntent().getExtras().getInt("keyId");
-        txtProductEdit.setText(getIntent().getExtras().getString("keyProduct"));
-        txtDetailEdit.setText(getIntent().getExtras().getString("keyDetail"));
-        txtPriceEdit.setText("" + getIntent().getExtras().getInt("keyPrice"));
+        txtIDEdit.setText(getIntent().getExtras().getString("keyID"));
+        txtNameEdit.setText(getIntent().getExtras().getString("keyName"));
+        if (getIntent().getExtras().getString("keyGender") == "Male"){
+            rgGenderEdit.check(R.id.rbMaleEdit);
+        }else{
+            rgGenderEdit.check(R.id.rbFemaleEdit);
+        }
+        txtEmailEdit.setText("" + getIntent().getExtras().getInt("keyEmail"));
+        txtBYEdit.setText("" + getIntent().getExtras().getInt("keyBY"));
         btnEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent();
                 setResult(RESULT_OK, i);
-                i.putExtra("keyId", id);
-                i.putExtra("keyProduct", txtProductEdit.getText().toString());
-                i.putExtra("keyDetail", txtDetailEdit.getText().toString());
-                i.putExtra("keyPrice", Integer.parseInt(txtPriceEdit.getText().toString()));
+                i.putExtra("keyId", txtIDEdit.getText().toString());
+                i.putExtra("keyName", txtNameEdit.getText().toString());
+                i.putExtra("keyEmail", txtEmailEdit.getText().toString());
+                i.putExtra("keyBY", txtBYEdit.getText().toString());
                 finish();
             }
         });

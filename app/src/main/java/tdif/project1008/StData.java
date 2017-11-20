@@ -5,10 +5,10 @@ package tdif.project1008;
  */
 
 public class StData {
-    private int id;
+    private String id;
     private String name, gender, email, by;
 
-    public StData(int id, String name, String gender, String email, String by) {
+    public StData(String id, String name, String gender, String email, String by) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -16,7 +16,7 @@ public class StData {
         this.by = by;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

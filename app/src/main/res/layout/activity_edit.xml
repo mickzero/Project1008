@@ -26,13 +26,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Product" />
+                android:text="ID" />
 
             <EditText
-                android:id="@+id/txtProductEdit"
+                android:id="@+id/txtIDEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6" />
+                android:layout_weight="5" />
 
         </TableRow>
 
@@ -44,13 +44,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Detail" />
+                android:text="Name" />
 
             <EditText
-                android:id="@+id/txtDetailEdit"
+                android:id="@+id/txtNameEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6" />
+                android:layout_weight="5" />
 
         </TableRow>
 
@@ -62,13 +62,66 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Price" />
+                android:text="Gender" />
 
-            <EditText
-                android:id="@+id/txtPriceEdit"
+            <RadioGroup
+                android:id="@+id/rgGenderEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6" />
+                android:layout_weight="5"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbMaleEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Male" />
+
+                <RadioButton
+                    android:id="@+id/rbFemaleEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female" />
+
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Email" />
+
+            <EditText
+                android:id="@+id/txtEmailEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BirthYear" />
+
+            <EditText
+                android:id="@+id/txtBYEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
 
         </TableRow>
 
